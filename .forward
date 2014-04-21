@@ -1,0 +1,1 @@
+|jmail /data/project/wikibugs/toredis.py wikibugs-l 2>&1 > /data/project/wikibugs/mailerror.log
