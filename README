@@ -1,0 +1,8 @@
+<pre>
+wikibugs is a project on Tool Labs to take over the job of the current wikibugs bot.
+
+The bot is currently in pre-alpha stage: it's being tested in a few channels,
+and the stability is not great yet -- there are some issues with the e-mail
+backend (via Redis / asyncio-redis) and with the IRC front-end (irc3).
+
+The entire project is Python 3.4 / asyncio based.
