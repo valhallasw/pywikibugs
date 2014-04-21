@@ -27,3 +27,20 @@ Deploying
 cd src/pywikibugs && git pull && cd ~ && ./start_pywikibugs.sh
 
 This will kill the current SGE job and start a new one.
+
+
+Adding a new channel
+--------------------
+Adapt the pywikibugs.channels dict. The format is:
+
+<channel name> => (filter function, parameters for build_message)
+
+The filter function gets the bug change dict passed as parameter.
+
+e.g.
+
+{"#pywikipediabot": (lambda x: x.get("X-Bugzilla-Product", None) == "Pywikibot", {})}
+will filter all Pywikibot bugs, without sending any special parameters to build_message.
+
+{"#somechannel": (lambda x: True, {'hide_product': True})}
+would send all bugs to #somechannel, but hides the product names.
