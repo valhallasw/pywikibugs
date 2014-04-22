@@ -7,8 +7,8 @@ The entire project is Python 3.4 / asyncio based.
 
 ### Steps from change to IRC ###
 1. User makes a change on Bugzilla
-2. Bugzilla sends an e-mail to wikibugs-l@lists.wm.o
-3. Tools mail server receives the e-mail. .forward pipes it to toredis.py
+2. Bugzilla sends an e-mail to wikibugs-l@lists.wikimedia.org
+3. Tools mail server receives the e-mail. `.forward` pipes it to toredis.py
 4. toredis.py sends the e-mail to Redis ('PUBLISH')
 
 The Redis step is useful because the mail and exec hosts are not necessarily the
@@ -16,21 +16,20 @@ same. Making them find eachother is also not completely trivial.
 
 5. The IRC bot listens to events on Redis ('SUBSCRIBE')
 6. The IRC bot receives the new e-mail
-7. bzparser.py parses the e-mail into a dict
-8. Asynchronously, bzparser.py retrieves real names for e-mail addresses.
-   If no response is received within 30 seconds, the request is stopped. (pywikibugs.parse_email.fixup_future)
-9. For each channel, pywikibugs.send_messages builds a message (via build_message) and dispatches it to the IRC channel
+7. `bzparser.py` parses the e-mail into a dict
+8. Asynchronously, `bzparser.py` retrieves real names for e-mail addresses.
+   If no response is received within 30 seconds, the request is stopped. (`pywikibugs.parse_email.fixup_future`)
+9. For each channel, `pywikibugs.send_messages` builds a message (via build_message) and dispatches it to the IRC channel
 
 ### Deploying ###
 
-cd src/pywikibugs && git pull && cd ~ && ./start_pywikibugs.sh
+    cd src/pywikibugs && git pull && cd ~ && ./start.bash
 
 This will kill the current SGE job and start a new one.
 
-
 ### Adding a new channel ###
 
-Adapt the pywikibugs.channels dict. The format is:
+Adapt the `pywikibugs.channels` dict. The format is:
 
     <channel name> => (filter function, parameters for build_message)
 
