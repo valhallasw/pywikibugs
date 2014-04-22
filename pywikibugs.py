@@ -43,6 +43,7 @@ def parse_email(mail):
     return bep.result
 
 channels = {"#wikimedia-dev": (lambda x: True, {}),
+            "#mediawiki-feed": (lambda x: True, {}),
             "#pywikipediabot": (lambda x: x.get("X-Bugzilla-Product", None) == "Pywikibot",
                                 {}),
             "#wikimedia-labs": (lambda x: x.get("X-Bugzilla-Product", None) in ["Tool Labs tools","Wikimedia Labs"],
