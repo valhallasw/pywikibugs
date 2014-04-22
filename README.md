@@ -23,7 +23,7 @@ same. Making them find eachother is also not completely trivial.
 
 ### Deploying ###
 
-cd src/pywikibugs && git pull && cd ~ && ./start_pywikibugs.sh
+cd src/pywikibugs && git pull && cd ~ && ./start.bash
 
 This will kill the current SGE job and start a new one.
 
