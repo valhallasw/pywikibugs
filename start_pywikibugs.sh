@@ -2,3 +2,5 @@
 jstop pywikibugs
 sleep 1
 jstart -mem 1G -once /data/project/wikibugs/src/pywikibugs/pywikibugs.py
+
+tail -f /data/project/wikibugs/pywikibugs.err
