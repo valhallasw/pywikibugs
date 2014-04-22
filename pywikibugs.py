@@ -69,9 +69,9 @@ def build_message(parsed_email, hide_product=False):
     text = ""
     
     if not hide_product:
-        text += colorify(parsed_email["X-Bugzilla-Product"], "red")
+        text += colorify(parsed_email["X-Bugzilla-Product"], "green")
     if parsed_email["X-Bugzilla-Component"] != "General":
-        text += " " + colorify(parsed_email["X-Bugzilla-Component"], "green")
+        text += " / " + colorify(parsed_email["X-Bugzilla-Component"], "green")
     text += ": "
     text += parsed_email["summary"] + " - "
     
