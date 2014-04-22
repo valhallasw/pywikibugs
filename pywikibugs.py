@@ -43,6 +43,7 @@ def parse_email(mail):
     return bep.result
 
 channels = {"#wikimedia-dev": (lambda x: True, {}),
+            "#mediawiki-feed": (lambda x: True, {}),
             "#pywikipediabot": (lambda x: x.get("X-Bugzilla-Product", None) == "Pywikibot",
                                 {}),
             "#wikimedia-labs": (lambda x: x.get("X-Bugzilla-Product", None) in ["Tool Labs tools","Wikimedia Labs"],
@@ -68,9 +69,9 @@ def build_message(parsed_email, hide_product=False):
     text = ""
     
     if not hide_product:
-        text += colorify(parsed_email["X-Bugzilla-Product"], "red")
+        text += colorify(parsed_email["X-Bugzilla-Product"], "green")
     if parsed_email["X-Bugzilla-Component"] != "General":
-        text += " " + colorify(parsed_email["X-Bugzilla-Component"], "green")
+        text += " / " + colorify(parsed_email["X-Bugzilla-Component"], "green")
     text += ": "
     text += parsed_email["summary"] + " - "
     
