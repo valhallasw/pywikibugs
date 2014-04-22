@@ -48,7 +48,13 @@ channels = {"#wikimedia-dev": (lambda x: True, {}),
                                 {}),
             "#wikimedia-labs": (lambda x: x.get("X-Bugzilla-Product", None) in ["Tool Labs tools","Wikimedia Labs"],
                                 {}),
-            "#mediawiki-visualeditor": (lambda x: x.get("X-Bugzilla-Product", None) in ["VisualEditor", "OOjs", "OOjs UI"],
+            "#mediawiki-visualeditor": (lambda x: x.get("X-Bugzilla-Product", None) in ["VisualEditor", "OOjs", "OOjs UI"] or \
+                                        (
+                                            (x.get("X-Bugzilla-Product", None) == "MediaWiki extensions") and \
+                                            (x.get("X-Bugzilla-Component", None) in ["TemplateData"])
+                                        ), {}),
+            "#wikimedia-corefeatures": (lambda x: (x.get("X-Bugzilla-Product", None) == "MediaWiki extensions") and \
+                                        (x.get("X-Bugzilla-Component", None) in ["Echo", "Flow", "LiquidThreads", "PageCuration", "Thanks"]),
                                         {}),
             "#wikimedia-qa": (lambda x: (x.get("X-Bugzilla-Product", None) == "Wikimedia") and \
                                         (x.get("X-Bugzilla-Component", None) in ["Continuous integration", "Quality Assurance"]),
