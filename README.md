@@ -5,8 +5,7 @@ The bot is currently alpha stage, being tested in a few IRC channels.
 The entire project is Python 3.4 / asyncio based.
 
 
-Steps from change to IRC
-------------------------
+### Steps from change to IRC ###
 1. User makes a change on Bugzilla
 2. Bugzilla sends an e-mail to wikibugs-l@lists.wm.o
 3. Tools mail server receives the e-mail. .forward pipes it to toredis.py
@@ -22,25 +21,27 @@ same. Making them find eachother is also not completely trivial.
    If no response is received within 30 seconds, the request is stopped. (pywikibugs.parse_email.fixup_future)
 9. For each channel, pywikibugs.send_messages builds a message (via build_message) and dispatches it to the IRC channel
 
-Deploying
----------
+### Deploying ###
+
 cd src/pywikibugs && git pull && cd ~ && ./start_pywikibugs.sh
 
 This will kill the current SGE job and start a new one.
 
 
-Adding a new channel
---------------------
+### Adding a new channel ###
+
 Adapt the pywikibugs.channels dict. The format is:
 
-<channel name> => (filter function, parameters for build_message)
+    <channel name> => (filter function, parameters for build_message)
 
 The filter function gets the bug change dict passed as parameter.
 
 e.g.
 
-{"#pywikipediabot": (lambda x: x.get("X-Bugzilla-Product", None) == "Pywikibot", {})}
+    {"#pywikipediabot": (lambda x: x.get("X-Bugzilla-Product", None) == "Pywikibot", {})}
+
 will filter all Pywikibot bugs, without sending any special parameters to build_message.
 
-{"#somechannel": (lambda x: True, {'hide_product': True})}
+    {"#somechannel": (lambda x: True, {'hide_product': True})}
+
 would send all bugs to #somechannel, but hides the product names.
