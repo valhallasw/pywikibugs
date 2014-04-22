@@ -212,7 +212,7 @@ if __name__ == '__main__':
 
     # instanciate a bot
     bot = irc3.IrcBot(
-        nick='pywikibugs', autojoins=list(channels.keys()),
+        nick='wikibugs', autojoins=list(channels.keys()),
         host='irc.freenode.net', port=7000, ssl=True,
         password=irc_password,
         realname="pywikibugs2",
