@@ -52,6 +52,8 @@ channels = {"##valhallasw": (lambda x: True, {}),
             "#wikimedia-qa": (lambda x: (x.get("X-Bugzilla-Product", None) == "Wikimedia") and \
                                         (x.get("X-Bugzilla-Component", None) in ["Continuous integration", "Quality Assurance"]),
                               {}),
+            "#mediawiki-parsoid": (lambda x: x.get("X-Bugzilla-Product", None) in ["Parsoid"], {}),
+            "#wikimedia-mobile": (lambda x: x.get("X-Bugzilla-Product", None) in ["Wikimedia Mobile", "Commons App", "Wikipedia App", "MobileFrontend"], {}),
 }
     
 def send_messages(bot, parsed_email):
