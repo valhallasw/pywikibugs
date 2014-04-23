@@ -62,11 +62,16 @@ channels = {"#wikimedia-dev": (lambda x: True, {}),
             "#mediawiki-parsoid": (lambda x: x.get("X-Bugzilla-Product", None) in ["Parsoid"], {}),
             "#wikimedia-mobile": (lambda x: x.get("X-Bugzilla-Product", None) in ["Wikimedia Mobile", "Commons App", "Wikipedia App", "MobileFrontend"], {}),
 }
-    
+
+def is_gerrit_status_change(parsed_email):
+    return parsed_email["email"] == "gerritadmin@wikimedia.org" and \
+           "changes" in parsed_email and \
+           "Status" in parsed_email["changes"]
+
 def send_messages(bot, parsed_email):
     # first, build the message
     for channel, (filter, params) in channels.items():
-        if filter(parsed_email) and not (parsed_email["email"] == "gerritadmin@wikimedia.org" and "changes" in parsed_email and "Status" in parsed_email["changes"]):
+        if filter(parsed_email) and not is_gerrit_status_change(parsed_email):
             msg = build_message(parsed_email, **params)
             bot.privmsg(channel, msg)
     
