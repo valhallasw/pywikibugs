@@ -66,7 +66,7 @@ channels = {"#wikimedia-dev": (lambda x: True, {}),
 def send_messages(bot, parsed_email):
     # first, build the message
     for channel, (filter, params) in channels.items():
-        if filter(parsed_email):
+        if filter(parsed_email) and not (parsed_email["email"] == "gerritadmin@wikimedia.org" and "changes" in parsed_email and "Status" in parsed_email["changes"]):
             msg = build_message(parsed_email, **params)
             bot.privmsg(channel, msg)
     
