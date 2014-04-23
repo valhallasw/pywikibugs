@@ -21,7 +21,7 @@ nameemailmatcher = r"""
 )
 """
 
-class BugzillaEmailParser(object):
+class BugzillaEmailParser():
     def __init__(self, email):
         self.email = email
         self.result = {}
