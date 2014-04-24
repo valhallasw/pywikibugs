@@ -2,6 +2,16 @@ import email._header_value_parser
 from email._header_value_parser import *
 from email._header_value_parser import _wsp_splitter, _validate_xtext
 
+## The following is email._header_value_parser.get_unstructured with
+## an adaptation: an extra =? parsing step was added:
+## if "=?" in tok and not tok.startswith("=?"):
+##            tok, rest = tok.split("=?", 1)
+##            remainder.insert(0, "=?" + rest)
+##
+## The code is, as is the rest of python, available under the PSF license.
+## See cpython source tree for attribution (bitdancer, haypo, reedy, pjenvey)
+
+
 def get_unstructured(value):
     """unstructured = (*([FWS] vchar) *WSP) / obs-unstruct
        obs-unstruct = *((*LF *CR *(obs-utext) *LF *CR)) / FWS)
