@@ -229,6 +229,7 @@ if __name__ == '__main__':
         url="https://tools.wmflabs.org/wikibugs/",
         includes=[
             'irc3.plugins.core',
+            'irc3.plugins.ctcp',
             __name__,  # this register MyPlugin
         ],
         verbose=True)
