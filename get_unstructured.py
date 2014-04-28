@@ -1,5 +1,6 @@
 import email._header_value_parser
 from email._header_value_parser import *
+from email._header_value_parser import _wsp_splitter, _validate_xtext
 
 def get_unstructured(value):
     """unstructured = (*([FWS] vchar) *WSP) / obs-unstruct
