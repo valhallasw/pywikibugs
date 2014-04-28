@@ -8,7 +8,8 @@ import glob
 # (=?... is only allowed after whitespace)
 from get_unstructured import get_unstructured
 
-import email._header_value_parser, email.headerregistry
+import email._header_value_parser
+import email.headerregistry
 email.headerregistry.UnstructuredHeader.value_parser = staticmethod(get_unstructured)
 
 
@@ -95,7 +96,7 @@ class BugzillaEmailParser():
             if line == "":
                 break
 
-            what, value = line[:colon_pos], line[colon_pos+1:]
+            what, value = line[:colon_pos], line[colon_pos + 1:]
             what = what.strip()
             value = value.strip()
 
