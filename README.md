@@ -1,14 +1,15 @@
-wikibugs is a project on Tool Labs to take over the job of the current wikibugs bot.
+**wikibugs** is a project on Wikimedia Tool Labs which took other an old Perl based script to relay Bugzilla notifications to IRC.
 
-The bot is currently alpha stage, being tested in a few IRC channels.
+The bot is currently alpha stage, being tested in a few IRC channels on freenode.net.
 
 The entire project is Python 3.4 / asyncio based.
 
 
 ### Steps from change to IRC ###
-1. User makes a change on Bugzilla
-2. Bugzilla sends an e-mail to wikibugs-l@lists.wikimedia.org
-3. Tools mail server receives the e-mail. `.forward` pipes it to toredis.py
+
+1. User makes a change on [https://bugzilla.wikimedia.org/](Wikimedia Bugzilla)
+2. Bugzilla sends an e-mail to the list [https://lists.wikimedia.org/mailman/listinfo/wikibugs-l](wikibugs-l@lists.wikimedia.org)
+3. Tools mail server receives the e-mail. `.forward` pipes it to [/toredis.py](toredis.py)
 4. toredis.py sends the e-mail to Redis ('PUBLISH')
 
 The Redis step is useful because the mail and exec hosts are not necessarily the
