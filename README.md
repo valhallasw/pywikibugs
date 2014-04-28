@@ -27,6 +27,8 @@ same. Making them find eachother is also not completely trivial.
 
 This will kill the current SGE job and start a new one.
 
+Please log this using ``!log local-wikibugs <message>`` in #wikimedia-labs.
+
 ### Adding a new channel ###
 
 Adapt the `pywikibugs.channels` dict. The format is:
