@@ -60,7 +60,14 @@ def is_gerrit_change(parsed_email):
 
 def send_messages(bot, parsed_email):
     # first, build the message
-    for channel, (filter, params) in channels.items():
+    for channel, channel_conf in channels.items():
+        # Works with just a lambda by default
+        # You can pass additional options by making it a tuple
+        if hasattr(channel_conf, '__call__'):
+            filter = channel_conf
+            params = {}
+        else:
+            filter, params = channel_conf
         if filter(parsed_email) and not is_gerrit_change(parsed_email):
             msg = build_message(parsed_email, **params)
             bot.privmsg(channel, msg)
