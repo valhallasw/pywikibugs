@@ -3,8 +3,10 @@ import asyncio
 import asyncio_redis
 import email, email.policy
 import glob
+import os
 import bzparser
 import pprint
+import subprocess
 
 import logging.config
 from irc3.plugins.command import command
@@ -12,6 +14,16 @@ import logging
 import irc3
 
 from config import irc_password
+
+import subprocess
+try:
+    __version__ = subprocess.Popen(["git", "describe"],
+                                   cwd=os.path.split(__file__)[0],
+                                   stdout=subprocess.PIPE
+                  ).communicate()[0].decode('ascii').strip()
+except Exception as e:
+    __version__ = '2.0 (unknown subrevision)'
+
 
 MAX_MESSAGE_LENGTH = 80*4
 
@@ -232,7 +244,11 @@ if __name__ == '__main__':
             'irc3.plugins.ctcp',
             __name__,  # this register MyPlugin
         ],
-        verbose=True)
+        verbose=True,
+        ctcp={'version': 'pywikibugs %s running on irc3 {version}. See {url} for more details.' % __version__,
+              'userinfo': '{userinfo}',
+              'ping': 'PONG'}
+    )
 
     asyncio.Task(redisrunner(bot))
     bot.run()
