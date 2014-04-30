@@ -85,7 +85,7 @@ def build_message(parsed_email, hide_product=False):
     
     text += colorify(parsed_email.get("shorturltocomment", parsed_email["shorturl"]), "teal") + " "
     
-    name = parsed_email.get("realname", None) or parsed_email["email"].split("@")[0] + " "
+    name = parsed_email.get("realname", None) or parsed_email["email"].split("@")[0]
     text += "(" + colorify(name, "teal") + ") "
     # the following is (semi-)optional and can be cut off if the message becomes too long
     # however, we want to keep the previous items
