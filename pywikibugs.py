@@ -14,7 +14,7 @@ import logging
 import irc3
 
 from config import irc_password
-from channels import channels
+from channels import channels, default_channel, firehose_channel
 
 import subprocess
 try:
@@ -59,6 +59,7 @@ def is_gerrit_change(parsed_email):
     return parsed_email["email"] == "gerritadmin@wikimedia.org"
 
 def send_messages(bot, parsed_email):
+    sent_once = False
     # first, build the message
     for channel, channel_conf in channels.items():
         # Works with just a lambda by default
@@ -71,6 +72,16 @@ def send_messages(bot, parsed_email):
         if filter(parsed_email) and not is_gerrit_change(parsed_email):
             msg = build_message(parsed_email, **params)
             bot.privmsg(channel, msg)
+            sent_once = True
+    # If we didn't match any channel, send to the default one
+    if not sent_once:
+        msg = build_message(parsed_email)
+        bot.privmsg(default_channel, msg)
+
+    # Send to the firehose anyway
+    msg = build_message(parsed_email)
+    bot.privmsg(firehose_channel, msg)
+
     
 def build_message(parsed_email, hide_product=False):
     cutoff_length = MAX_MESSAGE_LENGTH
@@ -219,9 +230,13 @@ if __name__ == '__main__':
         v['format'] = '%(asctime)s ' + v['format']
     logging.config.dictConfig(logdict)
 
+    channels_list = list(channels.keys())
+    channels_list.append(default_channel)
+    channels_list.append(firehose_channel)
+
     # instanciate a bot
     bot = irc3.IrcBot(
-        nick='wikibugs', autojoins=list(channels.keys()),
+        nick='wikibugs', autojoins=channels_list,
         host='irc.freenode.net', port=7000, ssl=True,
         password=irc_password,
         realname="pywikibugs2",
