@@ -1,8 +1,0 @@
-asyncio-redis==0.12.3
-docopt==0.6.1
-#irc3 needs to be installed from github as change
-#https://github.com/gawel/irc3/commit/58f263d159ef6ab90e32a5468a71959c6b025bb5
-#is required to prevent random disconnects
--e https://github.com/gawel/irc3/archive/master.zip#egg=irc3
-redis==2.9.1
-venusian==1.0a8
